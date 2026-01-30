@@ -3,12 +3,14 @@ from datetime import datetime
 from sqlmodel import SQLModel, Field
 from pydantic import EmailStr, ConfigDict
 from typing import Optional
+from src.auth.user_role import UserRole
 
 class UserBase(SQLModel):
     username: str
     email: EmailStr
 
 class UserCreate(UserBase):
+    role: UserRole
     password: str
 
 class UserUpdate(UserBase):

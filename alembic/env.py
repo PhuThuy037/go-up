@@ -20,11 +20,54 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from src.auth.model import User
-from src.comments.model import Comment
+# env.py
+from logging.config import fileConfig
+from sqlalchemy import engine_from_config
+from sqlalchemy import pool
+from alembic import context
+from sqlmodel import SQLModel
+
+# ... (đoạn config log giữ nguyên) ...
+
+# --- ĐOẠN IMPORT QUAN TRỌNG NHẤT ---
+print("--- BẮT ĐẦU LOAD MODEL ---")
+try:
+    from src.project_members.model import ProjectMember
+
+    print("✅ Đã load: ProjectMember")
+
+    from src.projects.model import Project
+
+    print("✅ Đã load: Project")
+
+    from src.tasks.model import Task
+
+    print("✅ Đã load: Task")
+
+    from src.comments.model import Comment
+
+    print("✅ Đã load: Comment")
+
+    from src.auth.model import User
+
+    print("✅ Đã load: User")
+
+except ImportError as e:
+    print(f"❌ LỖI IMPORT: {e}")
+    raise e
+
+target_metadata = SQLModel.metadata
+print("--- LOAD MODEL THÀNH CÔNG ---")
+# -----------------------------------
+
+# ... (phần còn lại của env.py giữ nguyên) ...
+
 from src.projects.model import Project
+
+from src.comments.model import Comment
 from src.project_members.model import ProjectMember
 from src.tasks.model import Task
+from src.auth.model import User
 target_metadata = SQLModel.metadata
 
 # other values from the config, defined by the needs of env.py,
