@@ -2,6 +2,9 @@ from sqlmodel import SQLModel, Field
 from typing import Optional
 from pydantic import  ConfigDict
 
+from src.auth.schemas import UserPublic
+
+
 # class Project(SQLModel, table=True):
 #     __tablename__ = "projects"
 #
@@ -29,6 +32,7 @@ class ProjectUpdate(ProjectBase):
 class ProjectPublic(ProjectBase):
     id: int
     title: str
-    description: str
+    description: Optional[str]
     owner_id : int
+    owner : UserPublic
     model_config = ConfigDict(from_attributes=True)

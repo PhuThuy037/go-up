@@ -12,3 +12,15 @@ def create_new_project(session: SessionDep,project: project_schema.ProjectCreate
 @router.get("/", response_model=list[project_schema.ProjectPublic])
 def get_all_project(session: SessionDep):
     return project_services.get_all_projects(session)
+
+@router.get("/{project_id}", response_model=project_schema.ProjectPublic)
+def get_project_by_id(project_id: int, session: SessionDep):
+    return project_services.get_project_by_id(session=session, project_id=project_id)
+
+@router.get("/{user_id}", response_model=project_schema.ProjectPublic)
+def get_project_by_username(user_id: int, session: SessionDep):
+    return project_services.get_project_by_username(session=session, owner_id=user_id)
+
+@router.patch("/{project_id}", response_model=project_schema.ProjectPublic)
+def update_project(*, session: SessionDep, project_id: int, project: project_schema.ProjectUpdate,current_user: CurrentUser):
+    return project_services.update_project(session=session, project_id=project_id, project=project, current_user_id=current_user.id)

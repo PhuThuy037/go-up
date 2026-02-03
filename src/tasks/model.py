@@ -4,11 +4,13 @@ from typing import Optional, TYPE_CHECKING
 from sqlmodel import SQLModel, Field, Relationship
 from src.projects.model import Project
 from src.comments.model import Comment
-
+from src.tasks.task_status import TaskStatus
 if TYPE_CHECKING:
     from src.projects.model import Project
     from src.auth.model import User
     from src.comments.model import Comment
+
+
 class Task(SQLModel, table=True):
     __tablename__ = "tasks"
 
