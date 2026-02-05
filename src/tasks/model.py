@@ -5,6 +5,7 @@ from sqlmodel import SQLModel, Field, Relationship
 from src.projects.model import Project
 from src.comments.model import Comment
 from src.tasks.task_status import TaskStatus
+import sqlalchemy as sa
 if TYPE_CHECKING:
     from src.projects.model import Project
     from src.auth.model import User
@@ -16,10 +17,16 @@ class Task(SQLModel, table=True):
 
     id: Optional[int] = Field(default=None, primary_key=True)
     title: str
-    status: str = Field(default="Todo")  # Todo, Doing, Done
+    status: TaskStatus = Field(
+        sa_column=sa.Column(
+            sa.Enum(TaskStatus, name="task_status"),
+            nullable=False,
+            server_default="todo",
+        )
+    )
 
     project_id: int = Field(foreign_key="projects.id")
-    assignee_id: Optional[int] = Field(foreign_key="users.id", default=None)  # Có thể chưa gán cho ai
+    assignee_id: Optional[int] = Field(foreign_key="users.id", default=None)
     assignee: Optional["User"] = Relationship(back_populates="assigned_tasks")
     # Relationship
     project: "Project" = Relationship(back_populates="tasks")

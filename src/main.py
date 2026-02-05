@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from contextlib import asynccontextmanager
 from src.auth.router import router as user_router
 from src.projects.router import router as project_router
+from src.project_members.router import router as project_member_router
 from fastapi.exceptions import RequestValidationError
 from src.common.errors import AppError
 import src.all_models
@@ -32,6 +33,8 @@ app.add_exception_handler(Exception, unhandled_exception_handler)
 # Router
 app.include_router(user_router)
 app.include_router(project_router)
+app.include_router(project_member_router)
+
 
 
 

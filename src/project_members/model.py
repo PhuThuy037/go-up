@@ -7,5 +7,5 @@ class ProjectMember(SQLModel, table=True):
     __tablename__ = "project_members"
     project_id: int = Field(foreign_key="projects.id",primary_key=True)
     user_id: int = Field(foreign_key="users.id", primary_key=True)
-    role: ProjectRole = Field(default=ProjectRole.LEADER)
+    role: ProjectRole = Field(default=ProjectRole.MEMBER)
     joined_at: datetime = Field(default_factory=utc_now)
