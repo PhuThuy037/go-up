@@ -1,15 +1,17 @@
-from datetime import datetime, timezone
-from typing import Optional, TYPE_CHECKING
 
-from sqlmodel import SQLModel, Field, Relationship
-from src.projects.model import Project
-from src.comments.model import Comment
-from src.tasks.task_status import TaskStatus
+from typing import TYPE_CHECKING, Optional
+
 import sqlalchemy as sa
+from sqlmodel import Field, Relationship, SQLModel
+
+from src.comments.model import Comment
+from src.projects.model import Project
+from src.tasks.task_status import TaskStatus
+
 if TYPE_CHECKING:
-    from src.projects.model import Project
     from src.auth.model import User
     from src.comments.model import Comment
+    from src.projects.model import Project
 
 
 class Task(SQLModel, table=True):

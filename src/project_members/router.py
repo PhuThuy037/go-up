@@ -1,12 +1,10 @@
 from fastapi import APIRouter
-from sqlalchemy.sql.functions import current_user
-
 from src.deps import SessionDep
 from src.auth.deps import CurrentUser
 import src.project_members.servies as services
 from src.project_members.deps import MemberCtxDeps, AddMemberBody
-from src.project_members.project_role import ProjectRole
-from src.project_members.schemas import ProjectMemberCreate, ProjectMemberBase, ProjectMemberPublic
+
+from src.project_members.schemas import ProjectMemberPublic, ProjectMemberUpdate
 
 router = APIRouter(prefix="/projects_member", tags=["projects_member"])
 
@@ -25,11 +23,11 @@ def add_member(session: SessionDep,project_id: int ,body: AddMemberBody, current
     )
 
 @router.patch("/{project_id}/members/{user_id}", response_model=ProjectMemberPublic)
-def update_member_role(session: SessionDep,ctx:  MemberCtxDeps , role: ProjectRole):
+def update_member_role(session: SessionDep,ctx:  MemberCtxDeps , role: ProjectMemberUpdate):
     return services.update_member_role(
         session=session,
         ctx=ctx,
-        role=role.value
+        role=role.role
     )
 
 @router.delete("/{project_id}/members/{user_id}")
